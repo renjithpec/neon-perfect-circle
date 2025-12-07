@@ -1,20 +1,34 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🟣 Neon Perfect Circle
 
-# Run and deploy your AI Studio app
+A cyberpunk-themed generative art game where players attempt to draw a perfect circle. Features accurate geometric scoring, live physics feedback, and a global leaderboard.
 
-This contains everything you need to run your app locally.
+## 🎮 Features
+* **Accurate Physics Engine:** Uses Least Squares Circle Fit (Kasa Method).
+* **Global Leaderboard:** Compete with players worldwide.
+* **Viral Sharing:** "I beat 90% of players" smart text generation.
+* **Cyberpunk UI:** Neon aesthetics and custom audio.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1kcJ-ncfNLVcM9JTaYbL1z575AFMUaL73
+## 🚀 How to Run Locally
+1. Clone the repo: `git clone https://github.com/YOUR_USERNAME/neon-perfect-circle.git`
+2. Install: `npm install`
+3. Rename `api.example.php` to `api.php` and add your database info.
+4. Run: `npm run dev`
 
-## Run Locally
+# 🟣 Neon Perfect Circle
 
-**Prerequisites:**  Node.js
+A cyberpunk-themed generative art game where players attempt to draw a perfect circle. Features accurate geometric scoring, live physics feedback, and a global leaderboard.
 
+## 🎮 Features
+* **Accurate Physics Engine:** Uses Least Squares Circle Fit (Kasa Method).
+* **Global Leaderboard:** Compete with players worldwide.
+* **Viral Sharing:** "I beat 90% of players" smart text generation.
+* **Cyberpunk UI:** Neon aesthetics and custom audio.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🚀 How to Run Locally
+1. Clone the repo: `git clone https://github.com/YOUR_USERNAME/neon-perfect-circle.git`
+2. Install: `npm install`
+3. Rename `api.example.php` to `api.php` and add your database info.
+4. Run: `npm run dev`
+
+Made with 💙 by **Renjith R**
+
