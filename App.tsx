@@ -5,7 +5,7 @@ import { soundEngine } from './utils/audio';
 import { LeaderboardService } from './utils/leaderboard';
 import ScoreDisplay from './components/ScoreDisplay';
 import Mascot from './components/Mascot';
-import Intro from './components/Intro'; // <--- IMPORT THE NEW INTRO
+import Intro from './components/Intro';
 
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,9 +21,10 @@ const App: React.FC = () => {
   const [loginError, setLoginError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // --- View State (Added INTRO) ---
+  // --- App State ---
   const [view, setView] = useState<'INTRO' | 'AUTH' | 'GAME' | 'LEADERBOARD'>('INTRO');
   const [previousView, setPreviousView] = useState<'AUTH' | 'GAME'>('AUTH');
+  const [isMuted, setIsMuted] = useState(false); // <--- NEW MUTE STATE
   
   // --- Drawing State ---
   const [isDrawing, setIsDrawing] = useState(false);
@@ -35,7 +36,14 @@ const App: React.FC = () => {
   const pointsRef = useRef<Point[]>([]);
   const rectRef = useRef<DOMRect | null>(null);
 
-  // --- VIRAL SHARE FUNCTION ---
+  // --- NEW: Toggle Mute ---
+  const toggleMute = () => {
+      const newState = !isMuted;
+      setIsMuted(newState);
+      soundEngine.setMute(newState);
+  };
+
+  // --- Viral Share Function ---
   const handleShare = async () => {
     if (!scoreResult) return;
     const beatPercent = Math.max(10, Math.floor(scoreResult.score - 5)); 
@@ -52,13 +60,13 @@ const App: React.FC = () => {
     }
   };
 
-  // --- Helper: Get Rank Styling ---
+  // --- Rank Styling ---
   const getRankStyle = (index: number) => {
       switch (index) {
-          case 0: return { color: 'text-yellow-400', icon: '🥇', label: '1st' };
-          case 1: return { color: 'text-gray-300', icon: '🥈', label: '2nd' };
-          case 2: return { color: 'text-orange-400', icon: '🥉', label: '3rd' };
-          default: return { color: 'text-cyan-600', icon: `${index + 1}`, label: `${index + 1}th` };
+          case 0: return { color: 'text-yellow-400', icon: '🥇' };
+          case 1: return { color: 'text-gray-300', icon: '🥈' };
+          case 2: return { color: 'text-orange-400', icon: '🥉' };
+          default: return { color: 'text-cyan-600', icon: `${index + 1}` };
       }
   };
 
@@ -115,6 +123,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('resize', initCanvas);
   }, [initCanvas, view]);
 
+  // --- Leaderboard Loader ---
   useEffect(() => {
       const loadScores = async () => {
           const scores = await LeaderboardService.getScores();
@@ -241,6 +250,7 @@ const App: React.FC = () => {
     } else { renderPath([]); setShowInstructions(true); setScoreResult(null); }
   };
 
+  // --- Handlers ---
   const handleMouseDown = (e: React.MouseEvent) => {
     if (containerRef.current) rectRef.current = containerRef.current.getBoundingClientRect();
     startDrawing(e.clientX, e.clientY);
@@ -257,6 +267,17 @@ const App: React.FC = () => {
   return (
     <div ref={containerRef} className="relative w-full h-[100dvh] bg-[#050505] overflow-hidden select-none font-mono text-cyan-500" style={{ touchAction: 'none' }}>
         <div className="scanlines" />
+
+        {/* --- GLOBAL MUTE BUTTON --- */}
+        {view !== 'INTRO' && (
+            <button 
+                onClick={toggleMute} 
+                className="fixed top-4 right-4 z-50 p-2 text-xl hover:text-white transition-colors"
+                style={{ filter: 'drop-shadow(0 0 5px #00FFFF)' }}
+            >
+                {isMuted ? '🔇' : '🔊'}
+            </button>
+        )}
 
         {/* --- VIEW: INTRO --- */}
         {view === 'INTRO' && (
@@ -296,7 +317,7 @@ const App: React.FC = () => {
         {/* --- VIEW: GAME SCREEN --- */}
         {view === 'GAME' && (
             <>
-                <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-start text-xs opacity-90">
+                <div className="absolute top-4 left-4 right-16 z-20 flex justify-between items-start text-xs opacity-90">
                     <div className="flex flex-col gap-1">
                         <div><span className="text-cyan-800">AGENT:</span> <span className="text-cyan-300 font-bold">{playerName}</span></div>
                         <button onClick={handleLogout} className="text-red-500 hover:text-red-300 underline text-[10px] uppercase text-left">LOGOUT</button>
