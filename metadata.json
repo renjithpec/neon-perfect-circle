@@ -1,0 +1,5 @@
+{
+  "name": "Neon Perfect Circle",
+  "description": "A cyberpunk-styled generative art game where players draw circles and receive a perfection score based on geometric accuracy.",
+  "requestFramePermissions": []
+}

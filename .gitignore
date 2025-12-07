@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Environment variables
+.env
+.env.local
+
+# SECURITY: Do not upload the real backend with passwords
+api.php
+
+# Editor files
+.vscode/*
+.idea
+.DS_Store
